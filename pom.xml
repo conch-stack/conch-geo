@@ -2,28 +2,111 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.9.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
+
     <groupId>ltd.beihu.geo</groupId>
     <artifactId>beihu-geo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>beihu-geo</name>
-    <description>Demo project for Spring Boot</description>
+    <description>beihu-geo</description>
 
     <properties>
         <java.version>1.8</java.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.deploy.plugin.version>2.8.2</maven.deploy.plugin.version>
+        <main.user.dir>${basedir}</main.user.dir>
+        <license.maven.plugin>3.0</license.maven.plugin>
+        <maven.java.formatter.plugin>0.4</maven.java.formatter.plugin>
+        <project.encoding>UTF-8</project.encoding>
+        <maven.compiler.plugin>3.1</maven.compiler.plugin>
+
+        <!--基础类库-->
+        <beihu.boot.version>1.0.3</beihu.boot.version>
+        <!--机构管理-->
+        <org-manager-common>1.0.9</org-manager-common>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ltd.beihu.core</groupId>
+                <artifactId>beihu-boot-dependencies</artifactId>
+                <version>${beihu.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
-
+        <!-- apache -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ltd.beihu.core</groupId>
+            <artifactId>tools-beihu-boot</artifactId>
+        </dependency>
+        <!-- web -->
+        <dependency>
+            <groupId>ltd.beihu.core</groupId>
+            <artifactId>web-beihu-boot-starter</artifactId>
+        </dependency>
+        <!-- Redis Starter -->
+        <dependency>
+            <groupId>ltd.beihu.core</groupId>
+            <artifactId>redis-beihu-boot-starter</artifactId>
+        </dependency>
+        <!-- 地理位置支持 -->
+        <dependency>
+            <groupId>tech.spiro</groupId>
+            <artifactId>addrparser</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <!-- db -->
+        <dependency>
+            <groupId>ltd.beihu.core</groupId>
+            <artifactId>mybatis-enhance-beihu-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ltd.beihu.core</groupId>
+            <artifactId>mybatis-pageable-beihu-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure-processor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-metadata</artifactId>
+        </dependency>
+        <!-- test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -32,12 +115,112 @@
     </dependencies>
 
     <build>
+        <finalName>${artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>application.properties</include>
+                    <include>application-${env}.properties</include>
+                    <include>china-region.json</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.1.0.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>ltd.beihu.core</groupId>
+                <artifactId>beihu-boot-mybatis-enhance-maven-codegen</artifactId>
+                <version>1.0.0</version>
+                <dependencies>
+                    <!--数据驱动依赖 MySQL的驱动默认只能使用5.x版本-->
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.47</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generator</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <execute>false</execute>
+                    <dbName>beihu-geo</dbName>
+                    <dbUrl>jdbc:mysql://192.168.2.44:3307</dbUrl>
+                    <dbUserName>root</dbUserName>
+                    <dbPassword>123456</dbPassword>
+                    <packageName>ltd.beihu.geo.modle</packageName>
+                    <tableNamePattern>%</tableNamePattern>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <env>uat</env>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <properties>
+                <env>pro</env>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>release</id>
+            <name>Nexus Release Repository</name>
+            <url>http://192.168.2.113:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://192.168.2.113:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
