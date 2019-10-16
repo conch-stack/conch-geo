@@ -50,6 +50,12 @@
 | 黑龙江省          | 43.25 | 53.33 | 43.4167 | 53.5500 | 121.11 | 135.05 | 121.1830 | 135.0833    |
 
 
+##### 使用
+> 1. 下载[数据文件](https://github.com/beihu-stack/beihu-geo/releases/download/v1.0.0/china-region.json.zip)
+> 2. 解压数据文件，放入项目的 resources 文件夹中
+> 3. 修改配置文件中的特殊配置
+> 4. 启动
+
 ##### TODO：
 
 - 集成百度地图
