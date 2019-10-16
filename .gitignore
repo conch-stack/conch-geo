@@ -13,6 +13,8 @@ target/
 .springBeans
 .sts4-cache
 
+*.json
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -29,3 +31,43 @@ build/
 
 ### VS Code ###
 .vscode/
+
+bin
+bak
+.pmd
+.idea.xml
+*.class
+*.bak
+null/
+tree.log
+tmp/
+velocity.log
+.DS_Store
+.m2
+
+# gradle related ignore in sub directories
+.gradle
+build
+out
+
+/target/
+
+.mvn
+mvnw.cmd
+mvnw
+logs/
+log/
+apilogs/
+.flattened-pom.xml
+*/.flattened-pom.xml
+*/target/
+*/logs/
+*/log/
+*/bllog/
+/bllog/
+geologs/
+/geologs/
+
+### NetBeans ###
+/build/
+\.DS_Store
