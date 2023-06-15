@@ -1,8 +1,8 @@
-### Beihu-Geo
+### Conch-Geo
 
 > 地理位置解析服务，可供爬虫使用！供参考学习！
 
-##### 本项目基于Beihu-Boot开发
+##### 本项目基于Conch-Boot开发
 
 ##### 功能：
 - 提供指定城市的经纬度生成，精度可控。
@@ -51,7 +51,7 @@
 
 
 ##### 使用
-> 1. 下载[数据文件](https://github.com/beihu-stack/beihu-geo/releases/download/v1.0.0/china-region.json.zip)
+> 1. 下载[数据文件](https://github.com/beihu-stack/conch-geo/releases/download/v1.0.0/china-region.json.zip)
 > 2. 解压数据文件，放入项目的 resources 文件夹中
 > 3. 修改配置文件中的特殊配置
 > 4. 启动
@@ -70,7 +70,7 @@
 
 `[addrparser](https://github.com/hsp8712/addrparser)`
 
-`[Beihu-Boot](https://github.com/beihu-stack/beihu-boot)`
+`[Conch-Boot](https://github.com/beihu-stack/conch-boot)`
 
 ###### 大神：
 

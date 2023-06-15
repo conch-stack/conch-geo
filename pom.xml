@@ -3,11 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ltd.beihu.geo</groupId>
-    <artifactId>beihu-geo</artifactId>
+    <groupId>com.nabob.conch</groupId>
+    <artifactId>conch-geo</artifactId>
     <version>0.0.1</version>
-    <name>beihu-geo</name>
-    <description>beihu-geo</description>
+
+    <name>conch-geo</name>
+    <description>conch-geo</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -20,7 +21,7 @@
         <maven.compiler.plugin>3.1</maven.compiler.plugin>
 
         <!--基础类库-->
-        <beihu.boot.version>1.0.3</beihu.boot.version>
+        <conch.boot.version>1.0.5</conch.boot.version>
         <!--机构管理-->
         <org-manager-common>1.0.9</org-manager-common>
     </properties>
@@ -28,9 +29,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>ltd.beihu.core</groupId>
-                <artifactId>beihu-boot-dependencies</artifactId>
-                <version>${beihu.boot.version}</version>
+                <groupId>com.nabob.conch</groupId>
+                <artifactId>conch-boot-dependencies</artifactId>
+                <version>${conch.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -48,18 +49,18 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>ltd.beihu.core</groupId>
-            <artifactId>tools-beihu-boot</artifactId>
+            <groupId>com.nabob.conch</groupId>
+            <artifactId>tools-conch-boot</artifactId>
         </dependency>
         <!-- web -->
         <dependency>
-            <groupId>ltd.beihu.core</groupId>
-            <artifactId>web-beihu-boot-starter</artifactId>
+            <groupId>com.nabob.conch</groupId>
+            <artifactId>web-conch-boot-starter</artifactId>
         </dependency>
         <!-- Redis Starter -->
         <dependency>
-            <groupId>ltd.beihu.core</groupId>
-            <artifactId>redis-beihu-boot-starter</artifactId>
+            <groupId>com.nabob.conch</groupId>
+            <artifactId>redis-conch-boot-starter</artifactId>
         </dependency>
         <!-- 地理位置支持 -->
         <dependency>
@@ -69,12 +70,12 @@
         </dependency>
         <!-- db -->
         <dependency>
-            <groupId>ltd.beihu.core</groupId>
-            <artifactId>mybatis-enhance-beihu-boot-starter</artifactId>
+            <groupId>com.nabob.conch</groupId>
+            <artifactId>mybatis-enhance-conch-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>ltd.beihu.core</groupId>
-            <artifactId>mybatis-pageable-beihu-boot-starter</artifactId>
+            <groupId>com.nabob.conch</groupId>
+            <artifactId>mybatis-pageable-conch-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -149,15 +150,15 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>ltd.beihu.core</groupId>
-                <artifactId>beihu-boot-mybatis-enhance-maven-codegen</artifactId>
-                <version>1.0.0</version>
+                <groupId>com.nabob.conch</groupId>
+                <artifactId>conch-boot-mybatis-enhance-maven-codegen</artifactId>
+                <version>${conch.boot.version}</version>
                 <dependencies>
                     <!--数据驱动依赖 MySQL的驱动默认只能使用5.x版本-->
                     <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.47</version>
+                        <groupId>com.mysql</groupId>
+                        <artifactId>mysql-connector-j</artifactId>
+                        <version>8.0.32</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -169,11 +170,11 @@
                 </executions>
                 <configuration>
                     <execute>false</execute>
-                    <dbName>beihu-geo</dbName>
-                    <dbUrl>jdbc:mysql://192.168.2.44:3307</dbUrl>
+                    <dbName>conch-geo</dbName>
+                    <dbUrl>jdbc:mysql://localhost:3306</dbUrl>
                     <dbUserName>root</dbUserName>
                     <dbPassword>123456</dbPassword>
-                    <packageName>ltd.beihu.geo.modle</packageName>
+                    <packageName>com.nabob.conch.geo.modle</packageName>
                     <tableNamePattern>%</tableNamePattern>
                 </configuration>
             </plugin>
@@ -210,17 +211,17 @@
         </profile>
     </profiles>
 
-    <distributionManagement>
-        <repository>
-            <id>release</id>
-            <name>Nexus Release Repository</name>
-            <url>http://192.168.2.113:8081/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://192.168.2.113:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>release</id>-->
+<!--            <name>Nexus Release Repository</name>-->
+<!--            <url>http://192.168.2.113:8081/nexus/content/repositories/releases</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>snapshots</id>-->
+<!--            <name>Nexus Snapshot Repository</name>-->
+<!--            <url>http://192.168.2.113:8081/nexus/content/repositories/snapshots</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
 
 </project>
